@@ -2,13 +2,31 @@ import React, { useEffect, useState } from "react";
 import AlbumCard from "../commons/AlbumCard";
 import { Row } from "antd";
 
-function LandingPage() {
+function LandingPage({ type }) {
   const [musicChart, setMusicChart] = useState([]);
+  const [sortAsc, setSortAsc] = useState(true);
   const url = `https://itunes.apple.com/us/rss/topalbums/limit=100/json`;
+  let title = "Music Chart TOP100";
+
+  switch (type) {
+    case "name":
+      title = "Names of TOP100";
+      break;
+    case "release":
+      title = "Release date of TOP100";
+      break;
+
+    default:
+      break;
+  }
 
   useEffect(() => {
     fetchMusicChart(url);
   }, []);
+
+  useEffect(() => {
+    setMusicChart([...musicChart.reverse()]);
+  }, [sortAsc]);
 
   const fetchMusicChart = (url) => {
     fetch(url)
@@ -24,7 +42,29 @@ function LandingPage() {
         }
       })
       .then((resJson) => {
-        setMusicChart(resJson.feed.entry);
+        let result = [];
+        switch (type) {
+          case "name":
+            result = resJson.feed.entry.sort((a, b) => {
+              return a["im:name"].label.localeCompare(b["im:name"].label);
+            });
+            break;
+          case "release":
+            result = resJson.feed.entry.sort((a, b) => {
+              return a["im:releaseDate"].label.localeCompare(
+                b["im:releaseDate"].label
+              );
+            });
+            break;
+          default:
+            result = resJson.feed.entry.map((e, index) => {
+              e.rank = index + 1;
+              return e;
+            });
+            break;
+        }
+
+        setMusicChart(result);
       })
       .catch((err) => console.log(err));
   };
@@ -32,17 +72,21 @@ function LandingPage() {
   return (
     <div style={{ width: "100%", margin: "0" }}>
       <div style={{ width: "85%", margin: "1rem auto" }}>
-        <h2>Music Chart TOP100</h2>
+        <h2>
+          {title}
+          {sortAsc ? (
+            <i class="fas fa-sort-up" onClick={() => setSortAsc(!sortAsc)} />
+          ) : (
+            <i class="fas fa-sort-down" onClick={() => setSortAsc(!sortAsc)} />
+          )}
+        </h2>
         <hr />
-
-        {/* Movie Grid Cards */}
-
         <Row gutter={[16, 16]}>
           {musicChart &&
             musicChart.map((music, index) => (
               <React.Fragment key={index}>
                 <AlbumCard
-                  rank={index + 1}
+                  rank={type ? 0 : music.rank}
                   albumImage={
                     music["im:image"].length ? music["im:image"][2].label : null
                   }

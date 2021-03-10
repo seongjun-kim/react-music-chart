@@ -11,7 +11,17 @@ function App() {
       <NavBar />
       <div style={{ paddingTop: "70px", minHeight: "calc(100vh - 100px)" }}>
         <Switch>
-          <Route exact path="/" component={LandingPage} />
+          <Route exact path="/" render={() => <LandingPage />} />
+          <Route
+            exact
+            path="/name"
+            render={() => <LandingPage type={"name"} />}
+          />
+          <Route
+            exact
+            path="/release"
+            render={() => <LandingPage type={"release"} />}
+          />
           <Route exact path="/movie/:movieId" component={MovieDetail} />
         </Switch>
       </div>
