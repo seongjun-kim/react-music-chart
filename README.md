@@ -3,7 +3,7 @@ This project use boilerplate project:[react-movie-app-ko] by 'jaewonhimnae'
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-[image](https://user-images.githubusercontent.com/17680551/110623999-f64f9480-81e0-11eb-86f2-093ad16081e5.png)
+![image](https://user-images.githubusercontent.com/17680551/110623999-f64f9480-81e0-11eb-86f2-093ad16081e5.png)
 
 ## Available Scripts
 
