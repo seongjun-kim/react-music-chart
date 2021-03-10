@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { API_URL } from "../../Config";
 import AlbumCard from "../commons/AlbumCard";
 import { Row } from "antd";
 
 function LandingPage({ type }) {
   const [musicChart, setMusicChart] = useState([]);
   const [sortAsc, setSortAsc] = useState(true);
-  const url = `https://itunes.apple.com/us/rss/topalbums/limit=100/json`;
   let title = "Music Chart TOP100";
 
   switch (type) {
@@ -21,7 +21,7 @@ function LandingPage({ type }) {
   }
 
   useEffect(() => {
-    fetchMusicChart(url);
+    fetchMusicChart(API_URL);
   }, []);
 
   useEffect(() => {

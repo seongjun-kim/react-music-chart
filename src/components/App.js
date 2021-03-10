@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import LandingPage from "./views/LandingPage/LandingPage.js";
 import NavBar from "./views/NavBar/NavBar";
 import Footer from "./views/Footer/Footer";
-import MovieDetail from "./views/MovieDetail/MovieDetail";
+import MusicDetail from "./views/MusicDetail/MusicDetail";
 
 function App() {
   return (
@@ -22,7 +22,7 @@ function App() {
             path="/release"
             render={() => <LandingPage type={"release"} />}
           />
-          <Route exact path="/movie/:movieId" component={MovieDetail} />
+          <Route exact path="/music/:musicId" component={MusicDetail} />
         </Switch>
       </div>
       <Footer />
